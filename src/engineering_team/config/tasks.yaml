@@ -1,0 +1,150 @@
+design_task:
+  description: >
+    Analyze the requirements and create a detailed technical design for a Clinic and Hospital Appointment Management System.
+
+    Everything should be organized in a single Python module, but clearly outline the entities, classes, methods, business rules, and workflows.
+
+    The design should include:
+    - Patient management
+    - Doctor management
+    - Medical specialties
+    - Appointment scheduling
+    - Appointment cancellation
+    - Appointment rescheduling
+    - Availability management
+    - Appointment status tracking
+    - Search and filtering
+    - Reporting capabilities
+
+    Here are the requirements: {requirements}
+
+    IMPORTANT:
+    Only output the design in markdown format.
+    Clearly describe each class, method, input parameters, return values, validations, and business rules.
+
+  expected_output: >
+    A complete technical design document describing all classes, data models,
+    methods, workflows, and scheduling rules for the appointment management system.
+
+  agent: engineering_lead
+
+  output_file: output/{module_name}_design.md
+
+
+code_task:
+  description: >
+    Implement the Clinic and Hospital Appointment Management System based on the design created by the engineering lead.
+
+    The module should support:
+
+    - Patient registration and management
+    - Doctor registration and management
+    - Specialty management
+    - Appointment scheduling
+    - Appointment conflict validation
+    - Appointment cancellation
+    - Appointment rescheduling
+    - Appointment status tracking
+    - Search functionality
+    - Basic reports and statistics
+
+    Here are the requirements: {requirements}
+
+  expected_output: >
+    A complete Python module implementing all required functionality.
+
+    IMPORTANT:
+    Output ONLY raw Python code.
+    Do not include markdown formatting, code blocks, explanations, or backticks.
+
+  agent: backend_engineer
+
+  context:
+    - design_task
+
+  output_file: output/{module_name}.py
+
+
+frontend_task:
+  description: >
+    Create a Gradio prototype named app.py that demonstrates the functionality
+    of the appointment management backend module {module_name}.
+
+    The UI should provide:
+
+    - Register Patient
+    - Register Doctor
+    - Create Specialty
+    - Schedule Appointment
+    - Cancel Appointment
+    - Reschedule Appointment
+    - View Appointments
+    - Search Appointments
+    - Generate Reports
+
+    Assume a single-user environment.
+    Keep the interface simple and focused on demonstrating functionality.
+
+    Here are the requirements: {requirements}
+
+  expected_output: >
+    A Gradio application in app.py.
+
+    The application should run as-is and import the backend class from {module_name}.
+
+    IMPORTANT:
+    Output ONLY raw Python code.
+    Do not include markdown formatting, code blocks, explanations, or backticks.
+
+    Use Gradio 5.x compatible syntax.
+    Do NOT use gr.inputs or gr.outputs.
+    Use modern components such as:
+      gr.Textbox
+      gr.Number
+      gr.Dropdown
+      gr.Dataframe
+      gr.Button
+    Prefer Blocks API over legacy Interface API when possible.
+    The generated application must run with the latest version of Gradio.
+
+  agent: frontend_engineer
+
+  context:
+    - design_task
+    - code_task
+
+  output_file: output/app.py
+
+
+test_task:
+  description: >
+    Create a comprehensive unit test suite for the backend module {module_name}.
+
+    Tests should cover:
+
+    - Patient creation
+    - Doctor creation
+    - Specialty creation
+    - Appointment scheduling
+    - Appointment conflicts
+    - Appointment cancellation
+    - Appointment rescheduling
+    - Appointment status updates
+    - Search functionality
+    - Report generation
+    - Validation rules
+
+  expected_output: >
+    A test module named test_{module_name}.py containing a comprehensive unit test suite.
+
+    IMPORTANT:
+    Output ONLY raw Python code.
+    Do not include markdown formatting, code blocks, explanations, or backticks.
+
+  agent: test_engineer
+
+  context:
+    - design_task
+    - code_task
+
+  output_file: output/test_{module_name}.py
